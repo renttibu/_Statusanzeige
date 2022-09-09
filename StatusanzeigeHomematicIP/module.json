@@ -1,0 +1,14 @@
+{
+    "id": "{B811C5C6-4DB9-2E1E-D8F8-1532D1A2CFCD}",
+    "name": "StatusanzeigeHomematicIP",
+    "type": 3,
+    "vendor": "UB",
+    "aliases": [
+        "Statusanzeige Homematic IP"
+    ],
+    "url": "https://github.com/ubittner/_Statusanzeige/tree/main/StatusanzeigeHomematicIP",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SAHMIP"
+}

@@ -1,0 +1,12 @@
+{
+    "id": "{3E8B8394-FC34-8C9A-6324-A03FB7E64B29}",
+    "name": "Statusanzeige",
+    "author": "Ulrich Bittner",
+    "url": "https://github.com/ubittner/_Statusanzeige",
+    "compatibility": {
+        "version": "6.1"
+    },
+    "version": "7.0",
+    "build": 1,
+    "date": 1662617816
+}
