@@ -1,4 +1,4 @@
-# Alarmzone
+# Statusanzeige
 
 [![IP-Symcon is awesome!](https://img.shields.io/badge/IP--Symcon-6.1-blue.svg)](https://www.symcon.de)
 [![Module Version](https://img.shields.io/badge/Module_Version-7.0-blue.svg)]()
