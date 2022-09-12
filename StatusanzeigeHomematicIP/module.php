@@ -163,11 +163,21 @@ class StatusanzeigeHomematicIP extends IPSModule
         }
 
         //Register references and update messages
-        $properties = ['UpperLightUnit', 'UpperLightUnitDeviceColor', 'UpperLightUnitDeviceBrightness', 'LowerLightUnit', 'LowerLightUnitDeviceColor', 'LowerLightUnitDeviceBrightness', 'CommandControl'];
-        foreach ($properties as $property) {
-            $id = $this->ReadPropertyInteger($property);
+        $names = [];
+        $names[] = ['propertyName' => 'UpperLightUnit', 'useUpdate' => false];
+        $names[] = ['propertyName' => 'UpperLightUnitDeviceColor', 'useUpdate' => true];
+        $names[] = ['propertyName' => 'UpperLightUnitDeviceBrightness', 'useUpdate' => true];
+        $names[] = ['propertyName' => 'LowerLightUnit', 'useUpdate' => false];
+        $names[] = ['propertyName' => 'LowerLightUnitDeviceColor', 'useUpdate' => true];
+        $names[] = ['propertyName' => 'LowerLightUnitDeviceBrightness', 'useUpdate' => true];
+        $names[] = ['propertyName' => 'CommandControl', 'useUpdate' => false];
+        foreach ($names as $name) {
+            $id = $this->ReadPropertyInteger($name['propertyName']);
             if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
                 $this->RegisterReference($id);
+                if ($name['useUpdate']) {
+                    $this->RegisterMessage($id, VM_UPDATE);
+                }
             }
         }
 
@@ -287,29 +297,55 @@ class StatusanzeigeHomematicIP extends IPSModule
                 //$Data[4] = timestamp value changed
                 //$Data[5] = timestamp last value
 
+                $trigger = true;
+                $names = ['UpperLightUnitDeviceColor', 'UpperLightUnitDeviceBrightness', 'LowerLightUnitDeviceColor', 'LowerLightUnitDeviceBrightness'];
+                foreach ($names as $name) {
+                    if ($SenderID == $this->ReadPropertyInteger($name)) {
+                        $trigger = false;
+                    }
+                }
+
+                if ($SenderID == $this->ReadPropertyInteger('UpperLightUnitDeviceColor')) {
+                    $this->UpdateColorFromDeviceColor(0);
+                }
+
+                if ($SenderID == $this->ReadPropertyInteger('UpperLightUnitDeviceBrightness')) {
+                    $this->UpdateBrightnessFromDeviceLevel(0);
+                }
+
+                if ($SenderID == $this->ReadPropertyInteger('LowerLightUnitDeviceColor')) {
+                    $this->UpdateColorFromDeviceColor(1);
+                }
+
+                if ($SenderID == $this->ReadPropertyInteger('LowerLightUnitDeviceBrightness')) {
+                    $this->UpdateBrightnessFromDeviceLevel(1);
+                }
+
                 if ($this->CheckMaintenance()) {
                     return;
                 }
 
-                //Trigger updates
-                //Upper light unit
-                //Checks if the trigger is assigned to the light unit
-                if ($this->CheckTrigger($SenderID, 0)) {
-                    $scriptText = self::MODULE_PREFIX . '_UpdateUpperLightUnit(' . $this->InstanceID . ');';
-                    IPS_RunScriptText($scriptText);
-                    if ($this->ReadPropertyBoolean('UpdateLowerLightUnit')) {
-                        $scriptText = self::MODULE_PREFIX . '_UpdateLowerLightUnit(' . $this->InstanceID . ');';
-                        IPS_RunScriptText($scriptText);
-                    }
-                }
-                //Lower light unit
-                //Checks if the trigger is assigned to the light unit
-                if ($this->CheckTrigger($SenderID, 1)) {
-                    $scriptText = self::MODULE_PREFIX . '_UpdateLowerLightUnit(' . $this->InstanceID . ');';
-                    IPS_RunScriptText($scriptText);
-                    if ($this->ReadPropertyBoolean('UpdateUpperLightUnit')) {
+                if ($trigger) {
+                    //Trigger updates
+                    //Upper light unit
+                    //Checks if the trigger is assigned to the light unit
+                    if ($this->CheckTrigger($SenderID, 0)) {
                         $scriptText = self::MODULE_PREFIX . '_UpdateUpperLightUnit(' . $this->InstanceID . ');';
                         IPS_RunScriptText($scriptText);
+                        if ($this->ReadPropertyBoolean('UpdateLowerLightUnit')) {
+                            $scriptText = self::MODULE_PREFIX . '_UpdateLowerLightUnit(' . $this->InstanceID . ');';
+                            IPS_RunScriptText($scriptText);
+                        }
+                    }
+                    //Lower light unit
+                    //Checks if the trigger is assigned to the light unit
+                    if ($this->CheckTrigger($SenderID, 1)) {
+                        $scriptText = self::MODULE_PREFIX . '_UpdateLowerLightUnit(' . $this->InstanceID . ');';
+                        IPS_RunScriptText($scriptText);
+                        if ($this->ReadPropertyBoolean('UpdateUpperLightUnit')) {
+                            $scriptText = self::MODULE_PREFIX . '_UpdateUpperLightUnit(' . $this->InstanceID . ');';
+                            IPS_RunScriptText($scriptText);
+                        }
                     }
                 }
                 break;

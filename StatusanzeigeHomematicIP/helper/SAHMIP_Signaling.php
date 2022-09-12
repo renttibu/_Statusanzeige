@@ -196,8 +196,13 @@ trait SAHMIP_Signaling
         $result = false;
         //Upper light unit
         if ($LightUnit == 0) {
+            $this->UpdateColorFromDeviceColor(0);
             $actualColor = $this->GetValue('UpperLightUnitColor');
             $this->SetValue('UpperLightUnitColor', $Color);
+            if ($actualColor == $Color) {
+                $this->SendDebug(__FUNCTION__, 'Es wird bereits der gleiche Farbwert angezeigt!', 0);
+                return true;
+            }
             $id = $this->ReadPropertyInteger('UpperLightUnit');
             if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
                 switch ($this->ReadPropertyInteger('UpperLightUnitDeviceType')) {
@@ -233,7 +238,12 @@ trait SAHMIP_Signaling
         }
         //Lower light unit
         if ($LightUnit == 1) {
+            $this->UpdateColorFromDeviceColor(1);
             $actualColor = $this->GetValue('LowerLightUnitColor');
+            if ($actualColor == $Color) {
+                $this->SendDebug(__FUNCTION__, 'Es wird bereits der gleiche Farbwert angezeigt!', 0);
+                return true;
+            }
             $this->SetValue('LowerLightUnitColor', $Color);
             $id = $this->ReadPropertyInteger('LowerLightUnit');
             if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
@@ -289,8 +299,13 @@ trait SAHMIP_Signaling
         $result = false;
         //Upper light unit
         if ($LightUnit == 0) {
+            $this->UpdateBrightnessFromDeviceLevel(0);
             $actualBrightness = $this->GetValue('UpperLightUnitBrightness');
             $this->SetValue('UpperLightUnitBrightness', $Brightness);
+            if ($actualBrightness == $Brightness) {
+                $this->SendDebug(__FUNCTION__, 'Es wird bereits die gleiche Helligkeit verwendet!', 0);
+                return true;
+            }
             $deviceBrightness = $this->GetValue('UpperLightUnitBrightness') / 100;
             $id = $this->ReadPropertyInteger('UpperLightUnit');
             if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
@@ -327,8 +342,13 @@ trait SAHMIP_Signaling
         }
         //Lower light unit
         if ($LightUnit == 1) {
+            $this->UpdateBrightnessFromDeviceLevel(1);
             $actualBrightness = $this->GetValue('LowerLightUnitBrightness');
             $this->SetValue('LowerLightUnitBrightness', $Brightness);
+            if ($actualBrightness == $Brightness) {
+                $this->SendDebug(__FUNCTION__, 'Es wird bereits die gleiche Helligkeit verwendet!', 0);
+                return true;
+            }
             $deviceBrightness = $this->GetValue('LowerLightUnitBrightness') / 100;
             $id = $this->ReadPropertyInteger('LowerLightUnit');
             if ($id > 1 && @IPS_ObjectExists($id)) { //0 = main category, 1 = none
