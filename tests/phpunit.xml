@@ -5,6 +5,8 @@
     </php>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../Statusanzeige</directory>
+            <directory suffix=".php">../StatusanzeigeHomematic</directory>
             <directory suffix=".php">../StatusanzeigeHomematicIP</directory>
         </whitelist>
     </filter>

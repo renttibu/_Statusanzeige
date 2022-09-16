@@ -1,0 +1,14 @@
+{
+    "id": "{17C9B00D-3C66-2B99-7F83-604DA32C91E6}",
+    "name": "StatusanzeigeHomematic",
+    "type": 3,
+    "vendor": "UB",
+    "aliases": [
+        "Statusanzeige Homematic"
+    ],
+    "url": "https://github.com/ubittner/_Statusanzeige/tree/main/StatusanzeigeHomematic",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SAHM"
+}

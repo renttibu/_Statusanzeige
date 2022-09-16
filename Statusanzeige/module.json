@@ -1,0 +1,14 @@
+{
+    "id": "{A059E898-5F10-F396-1886-3FB86DC92DD3}",
+    "name": "Statusanzeige",
+    "type": 3,
+    "vendor": "UB",
+    "aliases": [
+        "Statusanzeige"
+    ],
+    "url": "https://github.com/ubittner/_Statusanzeige/tree/main/Statusanzeige",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SA"
+}

@@ -10,5 +10,11 @@
 
 Folgende Module beinhaltet dieses Repository (in alphabetischer Reihenfolge):
 
+- __Statusanzeige__ ([Dokumentation](Statusanzeige))  
+  Dieses Modul schaltet eine Variable, um eine Statusanzeige zu schalten.
+
+- __Statusanzeige Homematic__ ([Dokumentation](StatusanzeigeHomematic))  
+  Dieses Modul integriert eine Homematic Statusanzeige.
+
 - __Statusanzeige Homematic IP__ ([Dokumentation](StatusanzeigeHomematicIP))  
   Dieses Modul integriert eine Homematic IP Statusanzeige.  
